@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" id="html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сайт Rudolf Pogosyan</title>
+    <title id="page-title">Сайт Rudolf Pogosyan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,26 +44,139 @@
             text-decoration: none;
             border-radius: 5px;
             margin-top: 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-btn {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .lang-btn.active {
+            background: #007acc;
+            color: white;
+        }
+        .armenian-text {
+            font-family: Arial, sans-serif;
         }
     </style>
 </head>
 <body>
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="changeLanguage('ru')">РУС</button>
+        <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
+        <button class="lang-btn" onclick="changeLanguage('hy')">ՀԱՅ</button>
+    </div>
+
     <header>
-        <h1>Добро пожаловать на мой сайт!</h1>
-        <p>Сайт Rudolf Pogosyan</p>
+        <h1 id="main-title">Добро пожаловать на мой сайт!</h1>
+        <p id="subtitle">Сайт Rudolf Pogosyan</p>
         <nav>
-            <a href="index.html">Главная</a>
-            <a href="about.html">Обо мне</a>
-            <a href="contact.html">Контакты</a>
+            <a href="index.html" id="nav-home">Главная</a>
+            <a href="about.html" id="nav-about">Обо мне</a>
+            <a href="contact.html" id="nav-contact">Контакты</a>
         </nav>
     </header>
     
     <div class="container">
-        <h2>Привет! Я создаю свой сайт на GitHub Pages</h2>
-        <p>Это мой личный сайт, где я буду делиться своими проектами и мыслями.</p>
-        <p>Сайт находится в разработке, но скоро здесь появится много интересного!</p>
+        <h2 id="welcome-title">Привет! Я создаю свой сайт на GitHub Pages</h2>
+        <p id="description-1">Это мой личный сайт, где я буду делиться своими проектами и мыслями.</p>
+        <p id="description-2">Сайт находится в разработке, но скоро здесь появится много интересного!</p>
         
-        <a href="contact.html" class="btn">Связаться со мной</a>
+        <a href="contact.html" class="btn" id="contact-btn">Связаться со мной</a>
     </div>
+
+    <script>
+        // Тексты для разных языков
+        const translations = {
+            ru: {
+                "page-title": "Сайт Rudolf Pogosyan",
+                "main-title": "Добро пожаловать на мой сайт!",
+                "subtitle": "Сайт Rudolf Pogosyan",
+                "nav-home": "Главная",
+                "nav-about": "Обо мне", 
+                "nav-contact": "Контакты",
+                "welcome-title": "Привет! Я создаю свой сайт на GitHub Pages",
+                "description-1": "Это мой личный сайт, где я буду делиться своими проектами и мыслями.",
+                "description-2": "Сайт находится в разработке, но скоро здесь появится много интересного!",
+                "contact-btn": "Связаться со мной"
+            },
+            en: {
+                "page-title": "Rudolf Pogosyan Website",
+                "main-title": "Welcome to My Website!",
+                "subtitle": "Rudolf Pogosyan Website", 
+                "nav-home": "Home",
+                "nav-about": "About Me",
+                "nav-contact": "Contact",
+                "welcome-title": "Hello! I'm creating my website on GitHub Pages",
+                "description-1": "This is my personal website where I'll share my projects and thoughts.",
+                "description-2": "The website is under development, but there will be lots of interesting content soon!",
+                "contact-btn": "Contact Me"
+            },
+            hy: {
+                "page-title": "Rudolf Pogosyan Կայք",
+                "main-title": "Բարի գալուստ իմ կայք!",
+                "subtitle": "Rudolf Pogosyan Կայք",
+                "nav-home": "Գլխավոր",
+                "nav-about": "Իմ մասին",
+                "nav-contact": "Կապ",
+                "welcome-title": "Բարև! Ես ստեղծում եմ իմ կայքը GitHub Pages-ում",
+                "description-1": "Սա իմ անձնական կայքն է, որտեղ ես կկիսվեմ իմ նախագծերով և մտքերով:",
+                "description-2": "Կայքը մշակման փուլում է, բայց շուտով այստեղ շատ հետաքրքիր բաներ կհայտնվեն:",
+                "contact-btn": "Կապնվել ինձ հետ"
+            }
+        };
+
+        function changeLanguage(lang) {
+            // Обновляем атрибут lang у html элемента
+            document.getElementById('html').setAttribute('lang', lang);
+            
+            // Обновляем все тексты
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[lang] && translations[lang][id]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][id];
+                    } else {
+                        element.textContent = translations[lang][id];
+                    }
+                }
+            });
+
+            // Обновляем активную кнопку языка
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Сохраняем выбор языка в localStorage
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // При загрузке страницы проверяем сохраненный язык
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'ru';
+            changeLanguage(savedLang);
+            
+            // Активируем правильную кнопку
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(savedLang.toUpperCase())) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
