@@ -37,53 +37,37 @@
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .language-switcher {
+        /* Выпадающий список языков */
+        .language-dropdown {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: white;
-            padding: 12px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            border: 2px solid #007acc;
-            display: flex;
-            gap: 5px;
         }
-        .lang-btn {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border: 2px solid #dee2e6;
-            padding: 10px 16px;
-            cursor: pointer;
-            border-radius: 8px;
+        .lang-select {
+            padding: 8px 12px;
+            border: 2px solid #007acc;
+            border-radius: 5px;
+            background: white;
+            color: #333;
             font-size: 14px;
             font-weight: bold;
-            color: #495057;
-            transition: all 0.3s ease;
-            min-width: 55px;
-            text-align: center;
+            cursor: pointer;
+            min-width: 80px;
         }
-        .lang-btn:hover {
-            background: linear-gradient(135deg, #007acc, #0056b3);
-            color: white;
-            border-color: #007acc;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
-        }
-        .lang-btn.active {
-            background: linear-gradient(135deg, #007acc, #0056b3);
-            color: white;
-            border-color: #0056b3;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
-            transform: translateY(-1px);
+        .lang-select:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 122, 204, 0.5);
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="language-switcher">
-            <button class="lang-btn active" onclick="changeLanguage('ru')">РУС</button>
-            <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
-            <button class="lang-btn" onclick="changeLanguage('hy')">ՀԱՅ</button>
+        <div class="language-dropdown">
+            <select class="lang-select" onchange="changeLanguage(this.value)">
+                <option value="ru">РУС</option>
+                <option value="en">ENG</option>
+                <option value="hy">ՀԱՅ</option>
+            </select>
         </div>
 
         <h1 id="main-title">Обо мне</h1>
@@ -160,28 +144,13 @@
                 }
             });
 
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
+            document.querySelector('.lang-select').value = lang;
             localStorage.setItem('preferred-language', lang);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             const savedLang = localStorage.getItem('preferred-language') || 'ru';
             changeLanguage(savedLang);
-            
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent === 'РУС' && savedLang === 'ru') {
-                    btn.classList.add('active');
-                } else if (btn.textContent === 'ENG' && savedLang === 'en') {
-                    btn.classList.add('active');
-                } else if (btn.textContent === 'ՀԱՅ' && savedLang === 'hy') {
-                    btn.classList.add('active');
-                }
-            });
         });
     </script>
 </body>
