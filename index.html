@@ -20,6 +20,7 @@
             border-radius: 10px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
         }
         nav {
             margin: 20px 0;
@@ -52,19 +53,40 @@
             position: absolute;
             top: 20px;
             right: 20px;
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border: 2px solid #007acc;
+            display: flex;
+            gap: 5px;
         }
         .lang-btn {
-            background: #f0f0f0;
-            border: 1px solid #ddd;
-            padding: 8px 15px;
-            margin: 0 5px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #dee2e6;
+            padding: 10px 16px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 14px;
+            font-weight: bold;
+            color: #495057;
+            transition: all 0.3s ease;
+            min-width: 55px;
+            text-align: center;
+        }
+        .lang-btn:hover {
+            background: linear-gradient(135deg, #007acc, #0056b3);
+            color: white;
+            border-color: #007acc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
         }
         .lang-btn.active {
-            background: #007acc;
+            background: linear-gradient(135deg, #007acc, #0056b3);
             color: white;
+            border-color: #0056b3;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+            transform: translateY(-1px);
         }
         .armenian-text {
             font-family: Arial, sans-serif;
@@ -72,13 +94,13 @@
     </style>
 </head>
 <body>
-    <div class="language-switcher">
-        <button class="lang-btn active" onclick="changeLanguage('ru')">РУС</button>
-        <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
-        <button class="lang-btn" onclick="changeLanguage('hy')">ՀԱՅ</button>
-    </div>
-
     <header>
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('ru')">РУС</button>
+            <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
+            <button class="lang-btn" onclick="changeLanguage('hy')">ՀԱՅ</button>
+        </div>
+
         <h1 id="main-title">Добро пожаловать на мой сайт!</h1>
         <p id="subtitle">Сайт Rudolf Pogosyan</p>
         <nav>
@@ -172,7 +194,11 @@
             // Активируем правильную кнопку
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.textContent.includes(savedLang.toUpperCase())) {
+                if (btn.textContent === 'РУС' && savedLang === 'ru') {
+                    btn.classList.add('active');
+                } else if (btn.textContent === 'ENG' && savedLang === 'en') {
+                    btn.classList.add('active');
+                } else if (btn.textContent === 'ՀԱՅ' && savedLang === 'hy') {
                     btn.classList.add('active');
                 }
             });
