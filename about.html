@@ -41,19 +41,40 @@
             position: absolute;
             top: 20px;
             right: 20px;
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border: 2px solid #007acc;
+            display: flex;
+            gap: 5px;
         }
         .lang-btn {
-            background: #f0f0f0;
-            border: 1px solid #ddd;
-            padding: 8px 15px;
-            margin: 0 5px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #dee2e6;
+            padding: 10px 16px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 14px;
+            font-weight: bold;
+            color: #495057;
+            transition: all 0.3s ease;
+            min-width: 55px;
+            text-align: center;
+        }
+        .lang-btn:hover {
+            background: linear-gradient(135deg, #007acc, #0056b3);
+            color: white;
+            border-color: #007acc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
         }
         .lang-btn.active {
-            background: #007acc;
+            background: linear-gradient(135deg, #007acc, #0056b3);
             color: white;
+            border-color: #0056b3;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+            transform: translateY(-1px);
         }
     </style>
 </head>
@@ -66,6 +87,7 @@
         </div>
 
         <h1 id="main-title">Обо мне</h1>
+        <p id="subtitle">Узнайте больше о моих навыках и опыте</p>
         <nav>
             <a href="index.html" id="nav-home">Главная</a>
             <a href="about.html" id="nav-about">Обо мне</a>
@@ -77,6 +99,11 @@
         <h2 id="about-title">Немного обо мне</h2>
         <p id="description-1">Здесь будет информация обо мне, моих навыках и проектах.</p>
         <p id="description-2">Страница находится в разработке...</p>
+        
+        <div id="skills-section">
+            <h3 id="skills-title">Мои навыки</h3>
+            <p id="skills-text">Скоро здесь появится список моих технических навыков и компетенций.</p>
+        </div>
     </div>
 
     <script>
@@ -84,32 +111,41 @@
             ru: {
                 "page-title": "Обо мне - Rudolf Pogosyan",
                 "main-title": "Обо мне",
+                "subtitle": "Узнайте больше о моих навыках и опыте",
                 "nav-home": "Главная",
                 "nav-about": "Обо мне",
                 "nav-contact": "Контакты",
                 "about-title": "Немного обо мне",
                 "description-1": "Здесь будет информация обо мне, моих навыках и проектах.",
-                "description-2": "Страница находится в разработке..."
+                "description-2": "Страница находится в разработке...",
+                "skills-title": "Мои навыки",
+                "skills-text": "Скоро здесь появится список моих технических навыков и компетенций."
             },
             en: {
                 "page-title": "About Me - Rudolf Pogosyan",
                 "main-title": "About Me", 
+                "subtitle": "Learn more about my skills and experience",
                 "nav-home": "Home",
                 "nav-about": "About Me",
                 "nav-contact": "Contact",
                 "about-title": "About Me",
                 "description-1": "Here will be information about me, my skills and projects.",
-                "description-2": "Page is under development..."
+                "description-2": "Page is under development...",
+                "skills-title": "My Skills",
+                "skills-text": "Soon there will be a list of my technical skills and competencies."
             },
             hy: {
                 "page-title": "Իմ մասին - Rudolf Pogosyan",
                 "main-title": "Իմ մասին",
+                "subtitle": "Իմացեք ավելին իմ հմտությունների և փորձի մասին",
                 "nav-home": "Գլխավոր",
                 "nav-about": "Իմ մասին",
                 "nav-contact": "Կապ",
                 "about-title": "Իմ մասին",
                 "description-1": "Այստեղ կլինի տեղեկություն իմ մասին, իմ հմտությունների և նախագծերի մասին:",
-                "description-2": "Էջը մշակման փուլում է..."
+                "description-2": "Էջը մշակման փուլում է...",
+                "skills-title": "Իմ հմտությունները",
+                "skills-text": "Շուտով այստեղ կհայտնվի իմ տեխնիկական հմտությունների և կոմպետենցիաների ցանկը:"
             }
         };
 
@@ -138,7 +174,11 @@
             
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.textContent.includes(savedLang.toUpperCase())) {
+                if (btn.textContent === 'РУС' && savedLang === 'ru') {
+                    btn.classList.add('active');
+                } else if (btn.textContent === 'ENG' && savedLang === 'en') {
+                    btn.classList.add('active');
+                } else if (btn.textContent === 'ՀԱՅ' && savedLang === 'hy') {
                     btn.classList.add('active');
                 }
             });
