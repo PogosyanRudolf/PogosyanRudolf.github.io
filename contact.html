@@ -59,6 +59,12 @@
             border-radius: 5px;
             font-size: 16px;
             box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus {
+            border-color: #007acc;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 122, 204, 0.3);
         }
         textarea {
             height: 150px;
@@ -73,9 +79,14 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
+            transition: background 0.3s;
         }
         button:hover {
             background: #005a9e;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
         }
         .success-message {
             background: #d4edda;
@@ -83,7 +94,23 @@
             padding: 15px;
             border-radius: 5px;
             margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
             display: none;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            color: #007acc;
+            margin: 10px 0;
         }
         .social-links {
             margin-top: 30px;
@@ -158,6 +185,14 @@
             ✅ Сообщение успешно отправлено! Я свяжусь с вами в ближайшее время.
         </div>
 
+        <div class="error-message" id="errorMessage">
+            ❌ Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз или напишите мне напрямую на email.
+        </div>
+
+        <div class="loading" id="loadingMessage">
+            ⏳ Отправка сообщения...
+        </div>
+
         <div class="contact-info">
             <h2 id="contacts-title">Мои контакты</h2>
             <div class="contact-item">
@@ -172,7 +207,9 @@
         </div>
 
         <h2 id="form-title">Форма обратной связи</h2>
-        <form id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
+        
+        <!-- ВАРИАНТ 1: Formspree (основной) -->
+        <form id="contactForm" action="https://formspree.io/f/mjkkzebq" method="POST">
             <div class="form-group">
                 <label for="name" id="name-label">Ваше имя *</label>
                 <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
@@ -193,13 +230,34 @@
                 <textarea id="message" name="message" required placeholder="Напишите ваше сообщение здесь..."></textarea>
             </div>
 
+            <!-- Скрытые поля для Formspree -->
+            <input type="hidden" name="_language" value="ru">
+            <input type="hidden" name="_subject" value="Новое сообщение с сайта">
+            
             <!-- Скрытое поле для защиты от спама -->
             <div style="display: none;">
                 <label for="honeypot">Не заполняйте это поле:</label>
-                <input type="text" id="honeypot" name="honeypot">
+                <input type="text" id="honeypot" name="_gotcha">
             </div>
 
             <button type="submit" id="submit-btn">📨 Отправить сообщение</button>
+        </form>
+
+        <!-- ВАРИАНТ 2: Резервная форма с EmailJS -->
+        <form id="backupForm" style="display: none;" onsubmit="return sendWithEmailJS(event)">
+            <div class="form-group">
+                <label for="backupName">Ваше имя *</label>
+                <input type="text" id="backupName" name="from_name" required>
+            </div>
+            <div class="form-group">
+                <label for="backupEmail">Ваш email *</label>
+                <input type="email" id="backupEmail" name="from_email" required>
+            </div>
+            <div class="form-group">
+                <label for="backupMessage">Сообщение *</label>
+                <textarea id="backupMessage" name="message" required></textarea>
+            </div>
+            <button type="submit">📨 Отправить (резервный метод)</button>
         </form>
 
         <div class="social-links">
@@ -226,7 +284,9 @@
                 "message-label": "Сообщение *",
                 "submit-btn": "📨 Отправить сообщение",
                 "social-text": "Также вы можете найти меня в соцсетях:",
-                "successMessage": "✅ Сообщение успешно отправлено! Я свяжусь с вами в ближайшее время."
+                "successMessage": "✅ Сообщение успешно отправлено! Я свяжусь с вами в ближайшее время.",
+                "errorMessage": "❌ Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз или напишите мне напрямую на email.",
+                "loadingMessage": "⏳ Отправка сообщения..."
             },
             en: {
                 "page-title": "Contact - Rudolf Pogosyan", 
@@ -243,7 +303,9 @@
                 "message-label": "Message *",
                 "submit-btn": "📨 Send Message",
                 "social-text": "You can also find me on social media:",
-                "successMessage": "✅ Message sent successfully! I will contact you soon."
+                "successMessage": "✅ Message sent successfully! I will contact you soon.",
+                "errorMessage": "❌ Sending error. Please try again or contact me directly by email.",
+                "loadingMessage": "⏳ Sending message..."
             },
             hy: {
                 "page-title": "Կապ - Rudolf Pogosyan",
@@ -260,55 +322,14 @@
                 "message-label": "Հաղորդագրություն *",
                 "submit-btn": "📨 Ուղարկել հաղորդագրություն",
                 "social-text": "Դուք նաև կարող եք գտնել ինձ սոցիալական ցանցերում:",
-                "successMessage": "✅ Հաղորդագրությունը հաջողությամբ ուղարկված է! Ես կկապնվեմ ձեզ հետ շուտով:"
+                "successMessage": "✅ Հաղորդագրությունը հաջողությամբ ուղարկված է! Ես կկապնվեմ ձեզ հետ շուտով:",
+                "errorMessage": "❌ Ուղարկման սխալ: Խնդրում ենք կրկին փորձել կամ ուղղակի գրել ինձ email-ով:",
+                "loadingMessage": "⏳ Հաղորդագրությունն ուղարկվում է..."
             }
         };
 
-        function changeLanguage(lang) {
-            // Обновляем атрибут lang у html элемента
-            document.getElementById('html').setAttribute('lang', lang);
-            
-            // Обновляем все тексты
-            const elements = document.querySelectorAll('[id]');
-            elements.forEach(element => {
-                const id = element.id;
-                if (translations[lang] && translations[lang][id]) {
-                    element.textContent = translations[lang][id];
-                }
-            });
-
-            // Обновляем активную кнопку языка
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Сохраняем выбор языка
-            localStorage.setItem('preferred-language', lang);
-        }
-
-        // При загрузке страницы проверяем сохраненный язык
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedLang = localStorage.getItem('preferred-language') || 'ru';
-            
-            // Устанавливаем язык
-            changeLanguage(savedLang);
-            
-            // Активируем правильную кнопку
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent === 'РУС' && savedLang === 'ru') {
-                    btn.classList.add('active');
-                } else if (btn.textContent === 'ENG' && savedLang === 'en') {
-                    btn.classList.add('active');
-                } else if (btn.textContent === 'ՀԱՅ' && savedLang === 'hy') {
-                    btn.classList.add('active');
-                }
-            });
-        });
-
-        // Оригинальный код для отправки формы
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        // Основная функция отправки формы
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Проверка на спам
@@ -318,44 +339,148 @@
             }
 
             // Валидация формы
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            if (message.length < 10) {
-                alert('Сообщение должно содержать не менее 10 символов');
+            if (!validateForm()) {
                 return false;
             }
 
+            // Показываем загрузку
+            showLoading(true);
+            hideMessages();
+
+            try {
+                const formData = new FormData(this);
+                
+                // Добавляем дополнительные поля
+                formData.append('_replyto', document.getElementById('email').value);
+                formData.append('_captcha', 'false');
+
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    showSuccess();
+                    this.reset();
+                } else {
+                    throw new Error('Formspree error');
+                }
+            } catch (error) {
+                console.error('Formspree error:', error);
+                showError();
+                // Показываем резервную форму
+                // showBackupForm();
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        // Валидация формы
+        function validateForm() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            // Проверка имени
+            if (name.length < 2) {
+                alert('Имя должно содержать не менее 2 символов');
+                return false;
+            }
+
+            // Проверка email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 alert('Пожалуйста, введите корректный email адрес');
                 return false;
             }
 
-            // Отправка формы
-            const form = e.target;
-            const formData = new FormData(form);
+            // Проверка сообщения
+            if (message.length < 10) {
+                alert('Сообщение должно содержать не менее 10 символов');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Вспомогательные функции
+        function showLoading(show) {
+            document.getElementById('loadingMessage').style.display = show ? 'block' : 'none';
+            document.getElementById('submit-btn').disabled = show;
+        }
+
+        function showSuccess() {
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showError() {
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideMessages() {
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function showBackupForm() {
+            // Копируем данные в резервную форму
+            document.getElementById('backupName').value = document.getElementById('name').value;
+            document.getElementById('backupEmail').value = document.getElementById('email').value;
+            document.getElementById('backupMessage').value = document.getElementById('message').value;
             
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
+            // Показываем резервную форму
+            document.getElementById('backupForm').style.display = 'block';
+        }
+
+        // Резервный метод отправки через EmailJS (нужно настроить)
+        function sendWithEmailJS(e) {
+            e.preventDefault();
+            alert('Резервный метод отправки. Нужно настроить EmailJS.');
+            return false;
+        }
+
+        // Функция смены языка
+        function changeLanguage(lang) {
+            document.getElementById('html').setAttribute('lang', lang);
+            
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[lang] && translations[lang][id]) {
+                    element.textContent = translations[lang][id];
                 }
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('successMessage').style.display = 'block';
-                    form.reset();
-                    // Прокручиваем к сообщению об успехе
-                    document.getElementById('successMessage').scrollIntoView({behavior: 'smooth'});
-                } else {
-                    alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
+            });
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // При загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'ru';
+            
+            changeLanguage(savedLang);
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === 'РУС' && savedLang === 'ru') {
+                    btn.classList.add('active');
+                } else if (btn.textContent === 'ENG' && savedLang === 'en') {
+                    btn.classList.add('active');
+                } else if (btn.textContent === 'ՀԱՅ' && savedLang === 'hy') {
+                    btn.classList.add('active');
                 }
-            })
-            .catch(error => {
-                alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
             });
         });
     </script>
