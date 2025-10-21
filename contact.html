@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" id="html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Контакты - Rudolf Pogosyan</title>
+    <title id="page-title">Контакты - Rudolf Pogosyan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,6 +20,7 @@
             border-radius: 10px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
         }
         nav {
             margin: 20px 0;
@@ -41,12 +42,6 @@
         }
         .contact-item {
             margin: 15px 0;
-            display: flex;
-            align-items: center;
-        }
-        .contact-item i {
-            width: 30px;
-            color: #007acc;
         }
         .form-group {
             margin-bottom: 20px;
@@ -100,15 +95,39 @@
             color: #007acc;
             font-size: 18px;
         }
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-btn {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .lang-btn.active {
+            background: #007acc;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Свяжитесь со мной</h1>
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('ru')">РУС</button>
+            <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
+            <button class="lang-btn" onclick="changeLanguage('hy')">ՀԱՅ</button>
+        </div>
+
+        <h1 id="main-title">Свяжитесь со мной</h1>
         <nav>
-            <a href="index.html">Главная</a>
-            <a href="about.html">Обо мне</a>
-            <a href="contact.html">Контакты</a>
+            <a href="index.html" id="nav-home">Главная</a>
+            <a href="about.html" id="nav-about">Обо мне</a>
+            <a href="contact.html" id="nav-contact">Контакты</a>
         </nav>
     </header>
 
@@ -118,7 +137,7 @@
         </div>
 
         <div class="contact-info">
-            <h2>Мои контакты</h2>
+            <h2 id="contacts-title">Мои контакты</h2>
             <div class="contact-item">
                 <strong>📧 Email:</strong> ваш.email@example.com
             </div>
@@ -130,26 +149,26 @@
             </div>
         </div>
 
-        <h2>Форма обратной связи</h2>
+        <h2 id="form-title">Форма обратной связи</h2>
         <form id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
             <div class="form-group">
-                <label for="name">Ваше имя *</label>
-                <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
+                <label for="name" id="name-label">Ваше имя *</label>
+                <input type="text" id="name" name="name" required placeholder="" id="name-placeholder">
             </div>
 
             <div class="form-group">
-                <label for="email">Ваш email *</label>
-                <input type="email" id="email" name="email" required placeholder="example@mail.com">
+                <label for="email" id="email-label">Ваш email *</label>
+                <input type="email" id="email" name="email" required placeholder="" id="email-placeholder">
             </div>
 
             <div class="form-group">
-                <label for="subject">Тема сообщения</label>
-                <input type="text" id="subject" name="subject" placeholder="О чём вы хотите поговорить?">
+                <label for="subject" id="subject-label">Тема сообщения</label>
+                <input type="text" id="subject" name="subject" placeholder="" id="subject-placeholder">
             </div>
 
             <div class="form-group">
-                <label for="message">Сообщение *</label>
-                <textarea id="message" name="message" required placeholder="Напишите ваше сообщение здесь..."></textarea>
+                <label for="message" id="message-label">Сообщение *</label>
+                <textarea id="message" name="message" required placeholder="" id="message-placeholder"></textarea>
             </div>
 
             <!-- Скрытое поле для защиты от спама -->
@@ -158,58 +177,140 @@
                 <input type="text" id="honeypot" name="honeypot">
             </div>
 
-            <button type="submit">📨 Отправить сообщение</button>
+            <button type="submit" id="submit-btn">📨 Отправить сообщение</button>
         </form>
 
         <div class="social-links">
-            <p>Также вы можете найти меня в соцсетях:</p>
+            <p id="social-text">Также вы можете найти меня в соцсетях:</p>
             <a href="https://github.com/PogosyanRudolf" target="_blank">🐙 GitHub</a>
-            <!-- Добавьте другие соцсети при необходимости -->
         </div>
     </div>
 
     <script>
+        // Тексты для разных языков
+        const translations = {
+            ru: {
+                "page-title": "Контакты - Rudolf Pogosyan",
+                "main-title": "Свяжитесь со мной",
+                "nav-home": "Главная",
+                "nav-about": "Обо мне",
+                "nav-contact": "Контакты",
+                "contacts-title": "Мои контакты",
+                "form-title": "Форма обратной связи",
+                "name-label": "Ваше имя *",
+                "name-placeholder": "Введите ваше имя",
+                "email-label": "Ваш email *", 
+                "email-placeholder": "example@mail.com",
+                "subject-label": "Тема сообщения",
+                "subject-placeholder": "О чём вы хотите поговорить?",
+                "message-label": "Сообщение *",
+                "message-placeholder": "Напишите ваше сообщение здесь...",
+                "submit-btn": "📨 Отправить сообщение",
+                "social-text": "Также вы можете найти меня в соцсетях:",
+                "successMessage": "✅ Сообщение успешно отправлено! Я свяжусь с вами в ближайшее время."
+            },
+            en: {
+                "page-title": "Contact - Rudolf Pogosyan", 
+                "main-title": "Contact Me",
+                "nav-home": "Home",
+                "nav-about": "About Me",
+                "nav-contact": "Contact",
+                "contacts-title": "My Contacts",
+                "form-title": "Contact Form",
+                "name-label": "Your Name *",
+                "name-placeholder": "Enter your name",
+                "email-label": "Your Email *",
+                "email-placeholder": "example@mail.com", 
+                "subject-label": "Subject",
+                "subject-placeholder": "What would you like to talk about?",
+                "message-label": "Message *",
+                "message-placeholder": "Write your message here...",
+                "submit-btn": "📨 Send Message",
+                "social-text": "You can also find me on social media:",
+                "successMessage": "✅ Message sent successfully! I will contact you soon."
+            },
+            hy: {
+                "page-title": "Կապ - Rudolf Pogosyan",
+                "main-title": "Կապնվել ինձ հետ",
+                "nav-home": "Գլխավոր",
+                "nav-about": "Իմ մասին", 
+                "nav-contact": "Կապ",
+                "contacts-title": "Իմ կոնտակտները",
+                "form-title": "Հետադարձ կապի ձև",
+                "name-label": "Ձեր անունը *",
+                "name-placeholder": "Մուտքագրեք ձեր անունը",
+                "email-label": "Ձեր email *",
+                "email-placeholder": "example@mail.com",
+                "subject-label": "Թեմա",
+                "subject-placeholder": "Ինչի մասին եք ցանկանում խոսել?",
+                "message-label": "Հաղորդագրություն *",
+                "message-placeholder": "Գրեք ձեր հաղորդագրությունը այստեղ...",
+                "submit-btn": "📨 Ուղարկել հաղորդագրություն",
+                "social-text": "Դուք նաև կարող եք գտնել ինձ սոցիալական ցանցերում:",
+                "successMessage": "✅ Հաղորդագրությունը հաջողությամբ ուղարկված է! Ես կկապնվեմ ձեզ հետ շուտով:"
+            }
+        };
+
+        function changeLanguage(lang) {
+            // Обновляем атрибут lang у html элемента
+            document.getElementById('html').setAttribute('lang', lang);
+            
+            // Обновляем все тексты
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[lang] && translations[lang][id]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][id];
+                    } else {
+                        element.textContent = translations[lang][id];
+                    }
+                }
+            });
+
+            // Обновляем активную кнопку языка
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Сохраняем выбор языка
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // При загрузке страницы проверяем сохраненный язык
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'ru';
+            changeLanguage(savedLang);
+            
+            // Активируем правильную кнопку
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(savedLang.toUpperCase())) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+
+        // Оригинальный код для отправки формы
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Проверка на спам
             const honeypot = document.getElementById('honeypot').value;
-            if (honeypot) {
-                return false;
-            }
+            if (honeypot) return false;
 
-            // Валидация формы
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            if (message.length < 10) {
-                alert('Сообщение должно содержать не менее 10 символов');
-                return false;
-            }
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Пожалуйста, введите корректный email адрес');
-                return false;
-            }
-
-            // Отправка формы
             const form = e.target;
             const formData = new FormData(form);
             
             fetch(form.action, {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
+                headers: {'Accept': 'application/json'}
             })
             .then(response => {
                 if (response.ok) {
                     document.getElementById('successMessage').style.display = 'block';
                     form.reset();
-                    // Прокручиваем к сообщению об успехе
                     document.getElementById('successMessage').scrollIntoView({behavior: 'smooth'});
                 } else {
                     alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
