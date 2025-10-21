@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru" id="html">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Контакты - Rudolf Pogosyan</title>
+    <title>Контакты - Rudolf Pogosyan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,7 +20,6 @@
             border-radius: 10px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: relative;
         }
         nav {
             margin: 20px 0;
@@ -59,12 +58,6 @@
             border-radius: 5px;
             font-size: 16px;
             box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        input:focus, textarea:focus {
-            border-color: #007acc;
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 122, 204, 0.3);
         }
         textarea {
             height: 150px;
@@ -79,14 +72,9 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
-            transition: background 0.3s;
         }
         button:hover {
             background: #005a9e;
-        }
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
         }
         .success-message {
             background: #d4edda;
@@ -94,89 +82,17 @@
             padding: 15px;
             border-radius: 5px;
             margin-bottom: 20px;
-            border: 1px solid #c3e6cb;
             display: none;
-        }
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-            display: none;
-        }
-        .loading {
-            display: none;
-            text-align: center;
-            color: #007acc;
-            margin: 10px 0;
-        }
-        .social-links {
-            margin-top: 30px;
-            text-align: center;
-        }
-        .social-links a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #007acc;
-            font-size: 18px;
-        }
-        .language-switcher {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: white;
-            padding: 12px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            border: 2px solid #007acc;
-            display: flex;
-            gap: 5px;
-        }
-        .lang-btn {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border: 2px solid #dee2e6;
-            padding: 10px 16px;
-            cursor: pointer;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #495057;
-            transition: all 0.3s ease;
-            min-width: 55px;
-            text-align: center;
-        }
-        .lang-btn:hover {
-            background: linear-gradient(135deg, #007acc, #0056b3);
-            color: white;
-            border-color: #007acc;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
-        }
-        .lang-btn.active {
-            background: linear-gradient(135deg, #007acc, #0056b3);
-            color: white;
-            border-color: #0056b3;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
-            transform: translateY(-1px);
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="language-switcher">
-            <button class="lang-btn active" onclick="changeLanguage('ru')">РУС</button>
-            <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
-            <button class="lang-btn" onclick="changeLanguage('hy')">ՀԱՅ</button>
-        </div>
-
-        <h1 id="main-title">Свяжитесь со мной</h1>
-        <p id="subtitle">Я всегда рад новым знакомствам и проектам</p>
+        <h1>Свяжитесь со мной</h1>
         <nav>
-            <a href="index.html" id="nav-home">Главная</a>
-            <a href="about.html" id="nav-about">Обо мне</a>
-            <a href="contact.html" id="nav-contact">Контакты</a>
+            <a href="index.html">Главная</a>
+            <a href="about.html">Обо мне</a>
+            <a href="contact.html">Контакты</a>
         </nav>
     </header>
 
@@ -185,16 +101,8 @@
             ✅ Сообщение успешно отправлено! Я свяжусь с вами в ближайшее время.
         </div>
 
-        <div class="error-message" id="errorMessage">
-            ❌ Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз или напишите мне напрямую на email.
-        </div>
-
-        <div class="loading" id="loadingMessage">
-            ⏳ Отправка сообщения...
-        </div>
-
         <div class="contact-info">
-            <h2 id="contacts-title">Мои контакты</h2>
+            <h2>Мои контакты</h2>
             <div class="contact-item">
                 <strong>📧 Email:</strong> ваш.email@example.com
             </div>
@@ -206,281 +114,52 @@
             </div>
         </div>
 
-        <h2 id="form-title">Форма обратной связи</h2>
-        
-        <!-- ВАРИАНТ 1: Formspree (основной) -->
+        <h2>Форма обратной связи</h2>
         <form id="contactForm" action="https://formspree.io/f/xeornwne" method="POST">
             <div class="form-group">
-                <label for="name" id="name-label">Ваше имя *</label>
+                <label for="name">Ваше имя *</label>
                 <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
             </div>
 
             <div class="form-group">
-                <label for="email" id="email-label">Ваш email *</label>
+                <label for="email">Ваш email *</label>
                 <input type="email" id="email" name="email" required placeholder="example@mail.com">
             </div>
 
             <div class="form-group">
-                <label for="subject" id="subject-label">Тема сообщения</label>
-                <input type="text" id="subject" name="subject" placeholder="О чём вы хотите поговорить?">
-            </div>
-
-            <div class="form-group">
-                <label for="message" id="message-label">Сообщение *</label>
+                <label for="message">Сообщение *</label>
                 <textarea id="message" name="message" required placeholder="Напишите ваше сообщение здесь..."></textarea>
             </div>
 
-            <!-- Скрытые поля для Formspree -->
-            <input type="hidden" name="_language" value="ru">
-            <input type="hidden" name="_subject" value="Новое сообщение с сайта">
-            
-            <!-- Скрытое поле для защиты от спама -->
-            <div style="display: none;">
-                <label for="honeypot">Не заполняйте это поле:</label>
-                <input type="text" id="honeypot" name="_gotcha">
-            </div>
-
-            <button type="submit" id="submit-btn">📨 Отправить сообщение</button>
+            <button type="submit">📨 Отправить сообщение</button>
         </form>
-
-        <!-- ВАРИАНТ 2: Резервная форма с EmailJS -->
-        <form id="backupForm" style="display: none;" onsubmit="return sendWithEmailJS(event)">
-            <div class="form-group">
-                <label for="backupName">Ваше имя *</label>
-                <input type="text" id="backupName" name="from_name" required>
-            </div>
-            <div class="form-group">
-                <label for="backupEmail">Ваш email *</label>
-                <input type="email" id="backupEmail" name="from_email" required>
-            </div>
-            <div class="form-group">
-                <label for="backupMessage">Сообщение *</label>
-                <textarea id="backupMessage" name="message" required></textarea>
-            </div>
-            <button type="submit">📨 Отправить (резервный метод)</button>
-        </form>
-
-        <div class="social-links">
-            <p id="social-text">Также вы можете найти меня в соцсетях:</p>
-            <a href="https://github.com/PogosyanRudolf" target="_blank">🐙 GitHub</a>
-        </div>
     </div>
 
     <script>
-        // Тексты для разных языков
-        const translations = {
-            ru: {
-                "page-title": "Контакты - Rudolf Pogosyan",
-                "main-title": "Свяжитесь со мной",
-                "subtitle": "Я всегда рад новым знакомствам и проектам",
-                "nav-home": "Главная",
-                "nav-about": "Обо мне",
-                "nav-contact": "Контакты",
-                "contacts-title": "Мои контакты",
-                "form-title": "Форма обратной связи",
-                "name-label": "Ваше имя *",
-                "email-label": "Ваш email *", 
-                "subject-label": "Тема сообщения",
-                "message-label": "Сообщение *",
-                "submit-btn": "📨 Отправить сообщение",
-                "social-text": "Также вы можете найти меня в соцсетях:",
-                "successMessage": "✅ Сообщение успешно отправлено! Я свяжусь с вами в ближайшее время.",
-                "errorMessage": "❌ Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз или напишите мне напрямую на email.",
-                "loadingMessage": "⏳ Отправка сообщения..."
-            },
-            en: {
-                "page-title": "Contact - Rudolf Pogosyan", 
-                "main-title": "Contact Me",
-                "subtitle": "I'm always open to new connections and projects",
-                "nav-home": "Home",
-                "nav-about": "About Me",
-                "nav-contact": "Contact",
-                "contacts-title": "My Contacts",
-                "form-title": "Contact Form",
-                "name-label": "Your Name *",
-                "email-label": "Your Email *",
-                "subject-label": "Subject",
-                "message-label": "Message *",
-                "submit-btn": "📨 Send Message",
-                "social-text": "You can also find me on social media:",
-                "successMessage": "✅ Message sent successfully! I will contact you soon.",
-                "errorMessage": "❌ Sending error. Please try again or contact me directly by email.",
-                "loadingMessage": "⏳ Sending message..."
-            },
-            hy: {
-                "page-title": "Կապ - Rudolf Pogosyan",
-                "main-title": "Կապնվել ինձ հետ",
-                "subtitle": "Միշտ բաց եմ նոր ծանոթությունների և նախագծերի համար",
-                "nav-home": "Գլխավոր",
-                "nav-about": "Իմ մասին", 
-                "nav-contact": "Կապ",
-                "contacts-title": "Իմ կոնտակտները",
-                "form-title": "Հետադարձ կապի ձև",
-                "name-label": "Ձեր անունը *",
-                "email-label": "Ձեր email *",
-                "subject-label": "Թեմա",
-                "message-label": "Հաղորդագրություն *",
-                "submit-btn": "📨 Ուղարկել հաղորդագրություն",
-                "social-text": "Դուք նաև կարող եք գտնել ինձ սոցիալական ցանցերում:",
-                "successMessage": "✅ Հաղորդագրությունը հաջողությամբ ուղարկված է! Ես կկապնվեմ ձեզ հետ շուտով:",
-                "errorMessage": "❌ Ուղարկման սխալ: Խնդրում ենք կրկին փորձել կամ ուղղակի գրել ինձ email-ով:",
-                "loadingMessage": "⏳ Հաղորդագրությունն ուղարկվում է..."
-            }
-        };
-
-        // Основная функция отправки формы
-        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Проверка на спам
-            const honeypot = document.getElementById('honeypot').value;
-            if (honeypot) {
-                return false;
-            }
-
-            // Валидация формы
-            if (!validateForm()) {
-                return false;
-            }
-
-            // Показываем загрузку
-            showLoading(true);
-            hideMessages();
-
-            try {
-                const formData = new FormData(this);
-                
-                // Добавляем дополнительные поля
-                formData.append('_replyto', document.getElementById('email').value);
-                formData.append('_captcha', 'false');
-
-                const response = await fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
                 if (response.ok) {
-                    showSuccess();
-                    this.reset();
+                    document.getElementById('successMessage').style.display = 'block';
+                    form.reset();
+                    document.getElementById('successMessage').scrollIntoView({behavior: 'smooth'});
                 } else {
-                    throw new Error('Formspree error');
+                    alert('❌ Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
                 }
-            } catch (error) {
-                console.error('Formspree error:', error);
-                showError();
-                // Показываем резервную форму
-                // showBackupForm();
-            } finally {
-                showLoading(false);
-            }
-        });
-
-        // Валидация формы
-        function validateForm() {
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const message = document.getElementById('message').value.trim();
-
-            // Проверка имени
-            if (name.length < 2) {
-                alert('Имя должно содержать не менее 2 символов');
-                return false;
-            }
-
-            // Проверка email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Пожалуйста, введите корректный email адрес');
-                return false;
-            }
-
-            // Проверка сообщения
-            if (message.length < 10) {
-                alert('Сообщение должно содержать не менее 10 символов');
-                return false;
-            }
-
-            return true;
-        }
-
-        // Вспомогательные функции
-        function showLoading(show) {
-            document.getElementById('loadingMessage').style.display = show ? 'block' : 'none';
-            document.getElementById('submit-btn').disabled = show;
-        }
-
-        function showSuccess() {
-            document.getElementById('successMessage').style.display = 'block';
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function showError() {
-            document.getElementById('errorMessage').style.display = 'block';
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function hideMessages() {
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'none';
-        }
-
-        function showBackupForm() {
-            // Копируем данные в резервную форму
-            document.getElementById('backupName').value = document.getElementById('name').value;
-            document.getElementById('backupEmail').value = document.getElementById('email').value;
-            document.getElementById('backupMessage').value = document.getElementById('message').value;
-            
-            // Показываем резервную форму
-            document.getElementById('backupForm').style.display = 'block';
-        }
-
-        // Резервный метод отправки через EmailJS (нужно настроить)
-        function sendWithEmailJS(e) {
-            e.preventDefault();
-            alert('Резервный метод отправки. Нужно настроить EmailJS.');
-            return false;
-        }
-
-        // Функция смены языка
-        function changeLanguage(lang) {
-            document.getElementById('html').setAttribute('lang', lang);
-            
-            const elements = document.querySelectorAll('[id]');
-            elements.forEach(element => {
-                const id = element.id;
-                if (translations[lang] && translations[lang][id]) {
-                    element.textContent = translations[lang][id];
-                }
-            });
-
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            localStorage.setItem('preferred-language', lang);
-        }
-
-        // При загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedLang = localStorage.getItem('preferred-language') || 'ru';
-            
-            changeLanguage(savedLang);
-            
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent === 'РУС' && savedLang === 'ru') {
-                    btn.classList.add('active');
-                } else if (btn.textContent === 'ENG' && savedLang === 'en') {
-                    btn.classList.add('active');
-                } else if (btn.textContent === 'ՀԱՅ' && savedLang === 'hy') {
-                    btn.classList.add('active');
-                }
+            })
+            .catch(error => {
+                alert('❌ Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
             });
         });
     </script>
