@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru" id="html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Обо мне - Rudolf Pogosyan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+        header {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        nav {
+            margin: 20px 0;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #007acc;
+            font-weight: bold;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-btn {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .lang-btn.active {
+            background: #007acc;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('ru')">РУС</button>
+            <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
+            <button class="lang-btn" onclick="changeLanguage('hy')">ՀԱՅ</button>
+        </div>
+
+        <h1 id="main-title">Обо мне</h1>
+        <nav>
+            <a href="index.html" id="nav-home">Главная</a>
+            <a href="about.html" id="nav-about">Обо мне</a>
+            <a href="contact.html" id="nav-contact">Контакты</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2 id="about-title">Немного обо мне</h2>
+        <p id="description-1">Здесь будет информация обо мне, моих навыках и проектах.</p>
+        <p id="description-2">Страница находится в разработке...</p>
+    </div>
+
+    <script>
+        const translations = {
+            ru: {
+                "page-title": "Обо мне - Rudolf Pogosyan",
+                "main-title": "Обо мне",
+                "nav-home": "Главная",
+                "nav-about": "Обо мне",
+                "nav-contact": "Контакты",
+                "about-title": "Немного обо мне",
+                "description-1": "Здесь будет информация обо мне, моих навыках и проектах.",
+                "description-2": "Страница находится в разработке..."
+            },
+            en: {
+                "page-title": "About Me - Rudolf Pogosyan",
+                "main-title": "About Me", 
+                "nav-home": "Home",
+                "nav-about": "About Me",
+                "nav-contact": "Contact",
+                "about-title": "About Me",
+                "description-1": "Here will be information about me, my skills and projects.",
+                "description-2": "Page is under development..."
+            },
+            hy: {
+                "page-title": "Իմ մասին - Rudolf Pogosyan",
+                "main-title": "Իմ մասին",
+                "nav-home": "Գլխավոր",
+                "nav-about": "Իմ մասին",
+                "nav-contact": "Կապ",
+                "about-title": "Իմ մասին",
+                "description-1": "Այստեղ կլինի տեղեկություն իմ մասին, իմ հմտությունների և նախագծերի մասին:",
+                "description-2": "Էջը մշակման փուլում է..."
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.getElementById('html').setAttribute('lang', lang);
+            
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[lang] && translations[lang][id]) {
+                    element.textContent = translations[lang][id];
+                }
+            });
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'ru';
+            changeLanguage(savedLang);
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(savedLang.toUpperCase())) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
